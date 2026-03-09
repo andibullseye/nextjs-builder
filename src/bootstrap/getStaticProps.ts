@@ -127,7 +127,7 @@ const getStaticProps = (project: ProjectState): GetStaticProps => async context 
         type,
         templates,
       },
-      revalidate: 300 // 900 // 15 minutes
+      revalidate: (86400 * 30) // 86400 - 1 day
     }
     return componentProps
 

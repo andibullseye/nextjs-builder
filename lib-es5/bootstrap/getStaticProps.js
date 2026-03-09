@@ -154,7 +154,7 @@ var getStaticProps = function (project) { return function (context) { return __a
                         type: type,
                         templates: templates,
                     },
-                    revalidate: 300 // 900 // 15 minutes
+                    revalidate: (86400 * 30) // 86400 - 1 day
                 };
                 return [2 /*return*/, componentProps
                     // might be not found  
