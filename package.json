@@ -39,7 +39,6 @@
   },
   "devDependencies": {
     "@silverstripe/nextjs-toolkit": "https://github.com/andibullseye/nextjs-toolkit.git",
-    "@types/glob": "^7.1.4",
     "@types/minimatch": "^5.1.2",
     "@types/next": "^9.0.0",
     "@types/node": "^16.7.10",
