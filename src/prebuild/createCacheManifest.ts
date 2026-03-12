@@ -1,4 +1,6 @@
-import { glob } from "glob"
+// import { glob } from "glob"
+import { globSync } from 'glob'
+
 import { basename } from "path"
 import { writeFile } from "../cache/write"
 import getCacheDir from "../cache/getCacheDir"
@@ -10,7 +12,7 @@ export default async (): Promise<void> => {
     ]
     const vars: Array<string> = []        
     
-    const cacheFiles = glob.sync(`${getCacheDir()}/{*.js,*.json}`, {
+    const cacheFiles = globSync(`${getCacheDir()}/{*.js,*.json}`, {
         dot: true,
     })
     cacheFiles.forEach(absPath => {

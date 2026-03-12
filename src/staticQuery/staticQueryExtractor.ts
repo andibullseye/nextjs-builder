@@ -1,7 +1,10 @@
 import { parse } from "@babel/parser"
 // @ts-ignore
 import traverse from "@babel/traverse"
-import glob from "glob"
+
+// import { glob } from "glob"
+import { globSync } from 'glob'
+
 import fs from "fs"
 import path from "path"
 import { CallExpression, Identifier, ImportDeclaration } from "@babel/types"
@@ -99,7 +102,7 @@ export const extractStaticQuery = (absPath: string): string | null => {
 
 export const extractStaticQueries = (baseDir: string) => {
   const pattern = path.join(baseDir, `src/**/*.{js,jsx,ts,tsx}`)
-  const files = glob.sync(pattern, { absolute: true });
+  const files = globSync(pattern, { absolute: true });
   return files.reduce((queries: Array<string>, absPath) => {
     const query = extractStaticQuery(absPath)
     if (query) {

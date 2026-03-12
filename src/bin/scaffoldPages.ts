@@ -5,7 +5,9 @@ import fs from "fs"
 import { ProjectConfig, getFragmentFields } from "@silverstripe/nextjs-toolkit"
 import createClient from "../graphql/createClient"
 import getLibraryDir from "../utils/getLibraryDir"
-import glob from "glob"
+
+// import { glob } from "glob"
+import { globSync } from 'glob'
 
 interface FragmentResult {
   type: string
@@ -48,7 +50,7 @@ export const scaffoldPages = (ssConfig: ProjectConfig) => {
       templatePath(`elementalArea`),
       { encoding: `utf8` }
     )
-    const existing = glob.sync(
+    const existing = globSync(
       `${projectDir}/**/ElementalArea{.tsx,.jsx}`,
       { absolute: true }
     )

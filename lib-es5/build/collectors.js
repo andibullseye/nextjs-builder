@@ -1,4 +1,5 @@
 "use strict";
+// @ts-ignore
 var __values = (this && this.__values) || function(o) {
     var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
     if (m) return m.call(o);
@@ -40,8 +41,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.collectElementalBlocks = exports.collectGetProps = exports.collectQueries = exports.collectTemplates = exports.createName = void 0;
-// @ts-ignore
-var glob_1 = __importDefault(require("glob"));
+// import { glob } from "glob"
+var glob_1 = require("glob");
 var path_1 = __importDefault(require("path"));
 var createName = function (absPath) {
     var match = path_1.default.basename(absPath).match(/^[A-Za-z0-9_]+/);
@@ -58,7 +59,7 @@ exports.createName = createName;
 var collectTemplates = function (baseDir) {
     var pattern = path_1.default.join(baseDir, "src/templates/**/*.{js,jsx,ts,tsx}");
     var nameToPath = {};
-    var result = glob_1.default.sync(pattern, { absolute: true });
+    var result = (0, glob_1.globSync)(pattern, { absolute: true });
     result.filter(function (absPath) { return (!absPath.match(/\.props\.(js|ts)$/)) &&
         !absPath.match(/\/props\.(js|ts)$/); })
         .forEach(function (absPath) {
@@ -71,7 +72,7 @@ var collectQueries = function (baseDir) {
     var e_1, _a;
     var pattern = path_1.default.join(baseDir, "src/**/*.graphql");
     var nameToPath = {};
-    var result = glob_1.default.sync(pattern, { absolute: true });
+    var result = (0, glob_1.globSync)(pattern, { absolute: true });
     try {
         for (var result_1 = __values(result), result_1_1 = result_1.next(); !result_1_1.done; result_1_1 = result_1.next()) {
             var absPath = result_1_1.value;
@@ -100,7 +101,7 @@ var collectGetProps = function (baseDir) {
     var nameToPath = {};
     var results = [];
     patterns.forEach(function (pattern) {
-        results = __spreadArray(__spreadArray([], __read(results), false), __read(glob_1.default.sync(pattern, { absolute: true })), false);
+        results = __spreadArray(__spreadArray([], __read(results), false), __read((0, glob_1.globSync)(pattern, { absolute: true })), false);
     });
     try {
         for (var results_1 = __values(results), results_1_1 = results_1.next(); !results_1_1.done; results_1_1 = results_1.next()) {
@@ -124,7 +125,7 @@ exports.collectGetProps = collectGetProps;
 var collectElementalBlocks = function (baseDir, elementalDir) {
     var pattern = path_1.default.join(baseDir, "src/".concat(elementalDir, "/**/*.{js,jsx,ts,tsx}"));
     var nameToPath = {};
-    var result = glob_1.default.sync(pattern, { absolute: true });
+    var result = (0, glob_1.globSync)(pattern, { absolute: true });
     result.forEach(function (absPath) {
         nameToPath[(0, exports.createName)(absPath)] = absPath;
     });

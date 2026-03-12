@@ -10,7 +10,8 @@ var fs_1 = __importDefault(require("fs"));
 var nextjs_toolkit_1 = require("@silverstripe/nextjs-toolkit");
 var createClient_1 = __importDefault(require("../graphql/createClient"));
 var getLibraryDir_1 = __importDefault(require("../utils/getLibraryDir"));
-var glob_1 = __importDefault(require("glob"));
+// import { glob } from "glob"
+var glob_1 = require("glob");
 var query = "\nquery PageFragments($baseClass: String!, $baseFields: [String!]) {\n    generateFragments(baseClass: $baseClass, baseFields: $baseFields) {\n        type\n        fragment\n    }\n\n}\n";
 var variables = {
     baseClass: "Page",
@@ -32,7 +33,7 @@ var scaffoldPages = function (ssConfig) {
         var absElementalPath = path_1.default.resolve(absComponentsPath, "../components/elements");
         fs_1.default.mkdirSync(absElementalPath, { recursive: true });
         var elementalPageSrc = fs_1.default.readFileSync(templatePath("elementalArea"), { encoding: "utf8" });
-        var existing = glob_1.default.sync("".concat(projectDir, "/**/ElementalArea{.tsx,.jsx}"), { absolute: true });
+        var existing = (0, glob_1.globSync)("".concat(projectDir, "/**/ElementalArea{.tsx,.jsx}"), { absolute: true });
         if (!existing.length) {
             elementalAreaPath = path_1.default.join(absElementalPath, "ElementalArea.tsx");
             fs_1.default.writeFileSync(elementalAreaPath, elementalPageSrc);

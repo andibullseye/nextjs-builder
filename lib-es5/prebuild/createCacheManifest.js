@@ -39,6 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+// import { glob } from "glob"
 var glob_1 = require("glob");
 var path_1 = require("path");
 var write_1 = require("../cache/write");
@@ -51,7 +52,7 @@ exports.default = (function () { return __awaiter(void 0, void 0, void 0, functi
             "",
         ];
         vars = [];
-        cacheFiles = glob_1.glob.sync("".concat((0, getCacheDir_1.default)(), "/{*.js,*.json}"), {
+        cacheFiles = (0, glob_1.globSync)("".concat((0, getCacheDir_1.default)(), "/{*.js,*.json}"), {
             dot: true,
         });
         cacheFiles.forEach(function (absPath) {

@@ -32,7 +32,8 @@ exports.extractStaticQueries = exports.extractStaticQuery = void 0;
 var parser_1 = require("@babel/parser");
 // @ts-ignore
 var traverse_1 = __importDefault(require("@babel/traverse"));
-var glob_1 = __importDefault(require("glob"));
+// import { glob } from "glob"
+var glob_1 = require("glob");
 var fs_1 = __importDefault(require("fs"));
 var path_1 = __importDefault(require("path"));
 var parser_options_1 = require("../babel/parser-options");
@@ -122,7 +123,7 @@ var extractStaticQuery = function (absPath) {
 exports.extractStaticQuery = extractStaticQuery;
 var extractStaticQueries = function (baseDir) {
     var pattern = path_1.default.join(baseDir, "src/**/*.{js,jsx,ts,tsx}");
-    var files = glob_1.default.sync(pattern, { absolute: true });
+    var files = (0, glob_1.globSync)(pattern, { absolute: true });
     return files.reduce(function (queries, absPath) {
         var query = (0, exports.extractStaticQuery)(absPath);
         if (query) {

@@ -9,7 +9,10 @@ import cacheElementalBlocks from "../prebuild/cacheElementalBlocks"
 
 import { ProjectConfig } from "@silverstripe/nextjs-toolkit"
 import createCacheManifest from "../prebuild/createCacheManifest"
-import { glob } from "glob"
+
+// import { glob } from "glob"
+import { globSync } from 'glob'
+
 import getProjectDir from "../utils/getProjectDir"
 import path from "path"
 import cache from "../cache/write"
@@ -36,7 +39,7 @@ export const buildManifest = (ssConfig: ProjectConfig): Promise<void> => {
   cache.clear()
   
   if (projectDir) {
-    glob.sync(path.join(projectDir, `prebuild/*.{js,ts}`), { absolute: true}).forEach(file => {
+    globSync(path.join(projectDir, `prebuild/*.{js,ts}`), { absolute: true}).forEach(file => {
       preBuildSteps.push(require(file).default)
     })
   }

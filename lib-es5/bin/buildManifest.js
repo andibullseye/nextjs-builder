@@ -12,6 +12,7 @@ var cacheTemplateManifest_1 = __importDefault(require("../prebuild/cacheTemplate
 var cacheGetProps_1 = __importDefault(require("../prebuild/cacheGetProps"));
 var cacheElementalBlocks_1 = __importDefault(require("../prebuild/cacheElementalBlocks"));
 var createCacheManifest_1 = __importDefault(require("../prebuild/createCacheManifest"));
+// import { glob } from "glob"
 var glob_1 = require("glob");
 var getProjectDir_1 = __importDefault(require("../utils/getProjectDir"));
 var path_1 = __importDefault(require("path"));
@@ -33,7 +34,7 @@ var buildManifest = function (ssConfig) {
     }
     write_1.default.clear();
     if (projectDir) {
-        glob_1.glob.sync(path_1.default.join(projectDir, "prebuild/*.{js,ts}"), { absolute: true }).forEach(function (file) {
+        (0, glob_1.globSync)(path_1.default.join(projectDir, "prebuild/*.{js,ts}"), { absolute: true }).forEach(function (file) {
             preBuildSteps.push(require(file).default);
         });
     }

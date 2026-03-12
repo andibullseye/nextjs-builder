@@ -1,5 +1,8 @@
 // @ts-ignore
-import glob from "glob"
+
+// import { glob } from "glob"
+import { globSync } from 'glob'
+
 import path from "path"
 
 // Remove once we figure out how to include types.d.ts in the prebuild
@@ -26,7 +29,7 @@ export const collectTemplates = (baseDir: string): StringMap => {
     const pattern = path.join(baseDir, `src/templates/**/*.{js,jsx,ts,tsx}`)
     const nameToPath: StringMap = {}
     
-    const result = glob.sync(pattern, { absolute: true });
+    const result = globSync(pattern, { absolute: true });
     result.filter((absPath: string) => (
         !absPath.match(/\.props\.(js|ts)$/)) &&
         !absPath.match(/\/props\.(js|ts)$/)
@@ -44,7 +47,7 @@ export const collectQueries = (baseDir: string): StringMap => {
     const pattern = path.join(baseDir, `src/**/*.graphql`)
 
     const nameToPath: StringMap = {}
-    const result = glob.sync(pattern, { absolute: true });
+    const result = globSync(pattern, { absolute: true });
     
     for (const absPath of result) {
         const rel = path.relative(`${process.cwd()}/src`, absPath)
@@ -68,7 +71,7 @@ export const collectGetProps = (baseDir: string): StringMap => {
     patterns.forEach(pattern => {
         results = [
             ...results,
-            ...glob.sync(pattern, { absolute: true })
+            ...globSync(pattern, { absolute: true })
         ] 
     })
     for (const absPath of results) {
@@ -86,7 +89,7 @@ export const collectElementalBlocks = (baseDir: string, elementalDir: string): S
     const pattern = path.join(baseDir, `src/${elementalDir}/**/*.{js,jsx,ts,tsx}`)
     const nameToPath: StringMap = {}
     
-    const result = glob.sync(pattern, { absolute: true });
+    const result = globSync(pattern, { absolute: true });
     result.forEach((absPath: string) => {
         nameToPath[createName(absPath)] = absPath
     })
