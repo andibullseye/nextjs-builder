@@ -16,8 +16,24 @@ query StaticBuild {
   }    
 `;
 
+const REDIRECTOR_PAGE_QUERY = `
+query RedirectorPage($link: String!) {
+    readOneRedirectorPage(link: $link) {
+        title
+        redirectionType
+        externalURL
+        linkTo {
+            link
+        }
+        linkToFile {
+            absoluteLink
+        }
+    }
+}
+`
 
 export {
     TYPE_RESOLUTION_QUERY,
     STATIC_PAYLOAD_QUERY,
+    REDIRECTOR_PAGE_QUERY
 }

@@ -63,7 +63,7 @@ var nowInTimeZone = function (timeZone) {
     return "".concat(map.year, "-").concat(map.month, "-").concat(map.day, " ").concat(map.hour, ":").concat(map.minute, ":").concat(map.second);
 };
 var getStaticProps = function (project) { return function (context) { return __awaiter(void 0, void 0, void 0, function () {
-    var getQueryForType, api, _a, getPropsManifest, typeAncestry, availableTemplates, page, url, templates, typeResolutionResult, data, result, type, ancestors, stage, now, queryStr, _b, propsKey, propsFunc, _c, basePageData, key, leObj, componentProps, err_1;
+    var getQueryForType, api, _a, getPropsManifest, typeAncestry, availableTemplates, page, url, templates, typeResolutionResult, data, result, type, redirData, redirectData, redirectUrl, ancestors, stage, now, queryStr, _b, propsKey, propsFunc, _c, basePageData, key, leObj, componentProps, err_1;
     var _d, _e, _f, _g, _h;
     return __generator(this, function (_j) {
         switch (_j.label) {
@@ -91,7 +91,7 @@ var getStaticProps = function (project) { return function (context) { return __a
                 templates = Object.keys(availableTemplates);
                 _j.label = 1;
             case 1:
-                _j.trys.push([1, 7, , 8]);
+                _j.trys.push([1, 9, , 10]);
                 return [4 /*yield*/, api.query(queries_1.TYPE_RESOLUTION_QUERY, { links: [url] })];
             case 2:
                 typeResolutionResult = _j.sent();
@@ -107,31 +107,51 @@ var getStaticProps = function (project) { return function (context) { return __a
                 };
                 result = typeResolutionResult.typesForLinks[0];
                 type = result.type;
+                if (!(type === 'RedirectorPage')) return [3 /*break*/, 4];
+                return [4 /*yield*/, api.query(queries_1.REDIRECTOR_PAGE_QUERY, { link: "".concat(url) })];
+            case 3:
+                redirData = _j.sent();
+                redirectData = redirData.readOneRedirectorPage;
+                redirectUrl = '/';
+                if (redirectData.redirectionType === 'Internal')
+                    redirectUrl = redirectData.linkTo.link;
+                if (redirectData.redirectionType === 'External')
+                    redirectUrl = redirectData.externalURL;
+                if (redirectData.redirectionType === 'File')
+                    redirectUrl = redirectData.linkToFile.absoluteLink;
+                return [2 /*return*/, {
+                        redirect: {
+                            destination: redirectUrl,
+                            permanent: false,
+                        },
+                    }];
+            case 4:
                 ancestors = (_f = typeAncestry[type]) !== null && _f !== void 0 ? _f : [];
                 stage = context.draftMode ? "DRAFT" : "LIVE";
                 now = nowInTimeZone("Pacific/Auckland");
                 queryStr = getQueryForType(type);
-                if (!queryStr) return [3 /*break*/, 4];
+                if (!queryStr) return [3 /*break*/, 6];
                 // Provide an optional `$now` variable for queries that use it.
                 // Servers ignore extra variables if not declared in the operation.
                 _b = data;
                 return [4 /*yield*/, api.query(queryStr, { link: url, stage: stage, now: now })];
-            case 3:
+            case 5:
                 // Provide an optional `$now` variable for queries that use it.
                 // Servers ignore extra variables if not declared in the operation.
                 _b.query = (_g = (_j.sent())) !== null && _g !== void 0 ? _g : null;
-                _j.label = 4;
-            case 4:
-                propsKey = (0, nextjs_toolkit_1.resolveAncestry)(type, ancestors, Object.keys(getPropsManifest));
-                propsFunc = propsKey ? (_h = getPropsManifest[propsKey]) !== null && _h !== void 0 ? _h : null : null;
-                if (!propsFunc) return [3 /*break*/, 6];
-                _c = data;
-                return [4 /*yield*/, propsFunc(data.query)];
-            case 5:
-                _c.extraProps = _j.sent();
                 _j.label = 6;
             case 6:
+                propsKey = (0, nextjs_toolkit_1.resolveAncestry)(type, ancestors, Object.keys(getPropsManifest));
+                propsFunc = propsKey ? (_h = getPropsManifest[propsKey]) !== null && _h !== void 0 ? _h : null : null;
+                if (!propsFunc) return [3 /*break*/, 8];
+                _c = data;
+                return [4 /*yield*/, propsFunc(data.query)];
+            case 7:
+                _c.extraProps = _j.sent();
+                _j.label = 8;
+            case 8:
                 basePageData = null;
+                console.log('data.query ... ', data.query);
                 if (data.query) {
                     for (key in data.query) {
                         leObj = data.query[key];
@@ -159,7 +179,7 @@ var getStaticProps = function (project) { return function (context) { return __a
                 return [2 /*return*/, componentProps
                     // might be not found  
                 ];
-            case 7:
+            case 9:
                 err_1 = _j.sent();
                 // @ts-ignore
                 if (typeof err_1.message !== 'undefined' && err_1.message.includes('could not be found')) {
@@ -168,7 +188,7 @@ var getStaticProps = function (project) { return function (context) { return __a
                         }];
                 }
                 throw err_1;
-            case 8: return [2 /*return*/];
+            case 10: return [2 /*return*/];
         }
     });
 }); }; };

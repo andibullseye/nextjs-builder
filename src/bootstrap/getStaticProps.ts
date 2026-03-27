@@ -4,7 +4,7 @@ import {
   resolveAncestry,
   linkify,
 } from "@silverstripe/nextjs-toolkit"
-import { TYPE_RESOLUTION_QUERY } from "../build/queries"
+import { TYPE_RESOLUTION_QUERY, REDIRECTOR_PAGE_QUERY } from "../build/queries"
 import createGetQueryForType from "../build/createGetQueryForType"
 import createClient from "../graphql/createClient"
 import { ProjectState } from "@silverstripe/nextjs-toolkit"
@@ -79,6 +79,27 @@ const getStaticProps = (project: ProjectState): GetStaticProps => async context 
 
     const result = typeResolutionResult.typesForLinks[0]
     const { type } = result
+
+    if(type==='RedirectorPage') {
+      const redirData = await api.query(
+        REDIRECTOR_PAGE_QUERY,
+        { link: `${url}` }
+      )
+      const redirectData = redirData.readOneRedirectorPage
+
+      let redirectUrl = '/'
+      if(redirectData.redirectionType==='Internal') redirectUrl = redirectData.linkTo.link
+      if(redirectData.redirectionType==='External') redirectUrl = redirectData.externalURL
+      if(redirectData.redirectionType==='File')     redirectUrl = redirectData.linkToFile.absoluteLink
+
+      return {
+        redirect: {
+          destination: redirectUrl, 
+          permanent: false, 
+        },
+      }
+    }
+
     // @ts-ignore
     const ancestors = typeAncestry[type] ?? []
     const stage = context.draftMode ? `DRAFT` : `LIVE`
@@ -103,6 +124,9 @@ const getStaticProps = (project: ProjectState): GetStaticProps => async context 
 
 
     let basePageData = null
+
+    console.log('data.query ... ', data.query)
+
     if(data.query) {
       for (const key in (data.query as any)) {
         const leObj:any = (data.query as any)[key];
