@@ -80,7 +80,6 @@ var getStaticProps = function (project) { return function (context) { return __a
                 }
                 url = (0, nextjs_toolkit_1.linkify)(url);
                 if (url.match(/\.[^\/]+$/)) {
-                    console.log("Not found:", url);
                     return [2 /*return*/, {
                             notFound: true,
                         }];
@@ -151,7 +150,6 @@ var getStaticProps = function (project) { return function (context) { return __a
                 _j.label = 8;
             case 8:
                 basePageData = null;
-                console.log('data.query ... ', data.query);
                 if (data.query) {
                     for (key in data.query) {
                         leObj = data.query[key];
@@ -162,7 +160,6 @@ var getStaticProps = function (project) { return function (context) { return __a
                 }
                 if (basePageData !== null && stage !== "DRAFT") {
                     if (basePageData.isPublishedInTheFuture) {
-                        console.log('IS 404 ... ');
                         return [2 /*return*/, {
                                 notFound: true,
                             }];

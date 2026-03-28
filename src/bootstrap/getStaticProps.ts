@@ -46,7 +46,6 @@ const getStaticProps = (project: ProjectState): GetStaticProps => async context 
   url = linkify(url)
 
   if (url.match(/\.[^\/]+$/)) {
-    console.log(`Not found:`, url)
     return {
       notFound: true,
     }
@@ -125,8 +124,6 @@ const getStaticProps = (project: ProjectState): GetStaticProps => async context 
 
     let basePageData = null
 
-    console.log('data.query ... ', data.query)
-
     if(data.query) {
       for (const key in (data.query as any)) {
         const leObj:any = (data.query as any)[key];
@@ -137,7 +134,6 @@ const getStaticProps = (project: ProjectState): GetStaticProps => async context 
     }
     if( basePageData!==null && stage!==`DRAFT`) {
       if(basePageData.isPublishedInTheFuture) {
-        console.log('IS 404 ... ')
         return {
           notFound: true,
         }

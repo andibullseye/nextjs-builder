@@ -28,7 +28,7 @@
     "crypto-browserify": "^3.12.0",
     "dotenv": "^10.0.0",
     "file-system-cache": "^1.0.5",
-    "glob": "^10",
+    "glob": "^13",
     "gql-compress": "^2.0.24",
     "graphql": "^15.5.0",
     "html-react-parser": "^1.2.8",
@@ -38,17 +38,13 @@
     "slash": "^4.0.0"
   },
   "devDependencies": {
-    "@silverstripe/nextjs-toolkit": "https://github.com/andibullseye/nextjs-toolkit.git",
+    "@silverstripe/nextjs-toolkit": "https://github.com/andibullseye/nextjs-toolkit.git#develop",
     "@types/minimatch": "^5.1.2",
-    "@types/next": "^9.0.0",
     "@types/node": "^16.7.10",
     "@types/node-fetch": "^2.5.12",
     "@types/react": "16.9.17",
     "@types/react-dom": "16.9.4",
-    "eslint": "^7.12.0",
-    "eslint-config-prettier": "^6.14.0",
-    "eslint-config-sanity": "^1.150.8",
-    "next": "^13.0",
+    "next": "^14",
     "prettier": "^2.1.2",
     "typescript": "^4.2.3"
   },
