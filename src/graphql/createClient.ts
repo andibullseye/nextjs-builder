@@ -42,7 +42,6 @@ const createClient = (projectConfig: ProjectConfig) => {
 
     // add nextJS tag
     const cacheTag = variables.link ? `tag-${variables.link.replaceAll('/', '--')}--page` : `other-tag`
-    console.log('cacheTag', variables.link, cacheTag)
 
     clientConfig.options.headers["Content-Type"] = `application/json`
     const options = {

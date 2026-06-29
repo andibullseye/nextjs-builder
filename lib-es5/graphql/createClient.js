@@ -76,7 +76,6 @@ var createClient = function (projectConfig) {
                             throw new Error("\n            You have no graphql endpoint specified. Please add it to the \"client()\" function in ss.config.js\n            ");
                         }
                         cacheTag = variables.link ? "tag-".concat(variables.link.replaceAll('/', '--'), "--page") : "other-tag";
-                        console.log('cacheTag', variables.link, cacheTag);
                         clientConfig.options.headers["Content-Type"] = "application/json";
                         options = __assign(__assign({}, clientConfig.options), { method: "POST", body: JSON.stringify({
                                 query: query,
