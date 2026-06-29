@@ -58,7 +58,7 @@ var createClient = function (projectConfig) {
     var query = function (query, variables) {
         if (variables === void 0) { variables = {}; }
         return __awaiter(void 0, void 0, void 0, function () {
-            var cacheKey, cached, existing, clientConfig, options, res, json, e_1;
+            var cacheKey, cached, existing, clientConfig, cacheTag, options, res, json, e_1;
             var _a, _b;
             return __generator(this, function (_c) {
                 switch (_c.label) {
@@ -75,11 +75,14 @@ var createClient = function (projectConfig) {
                         if (!clientConfig.endpoint) {
                             throw new Error("\n            You have no graphql endpoint specified. Please add it to the \"client()\" function in ss.config.js\n            ");
                         }
+                        cacheTag = variables.link ? "tag-".concat(variables.link.replaceAll('/', '--')) : "page-tag";
                         clientConfig.options.headers["Content-Type"] = "application/json";
                         options = __assign(__assign({}, clientConfig.options), { method: "POST", body: JSON.stringify({
                                 query: query,
                                 variables: variables,
-                            }) });
+                            }), next: {
+                                tags: ["".concat(cacheTag)]
+                            } });
                         _c.label = 1;
                     case 1:
                         _c.trys.push([1, 4, , 5]);

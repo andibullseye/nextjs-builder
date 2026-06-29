@@ -40,6 +40,9 @@ const createClient = (projectConfig: ProjectConfig) => {
             `)
     }
 
+    // add nextJS tag
+    const cacheTag = variables.link ? `tag-${variables.link.replaceAll('/', '--')}` : `page-tag`
+
     clientConfig.options.headers["Content-Type"] = `application/json`
     const options = {
       ...clientConfig.options,
@@ -48,6 +51,9 @@ const createClient = (projectConfig: ProjectConfig) => {
         query,
         variables,
       }),
+      next: {
+        tags: [`${cacheTag}`]
+      }
     }
     try {
       const res = await fetch(clientConfig.endpoint, options)
